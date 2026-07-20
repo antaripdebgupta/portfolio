@@ -1,26 +1,186 @@
+@import "normalize.css";
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --ink: #14181b;
+  --muted: #5b6368;
+  --accent: #1f7a5c;
+  --accent-dim: #e7f1ec;
+  --line: #dcddd9;
+  --maxw: 880px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-line: var(--line);
+
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-sans: var(--font-ibm-plex-sans), system-ui, sans-serif;
+
+  --width-maxw: var(--maxw);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base resets ────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  font-size: 1rem; /* 16px base, respects user zoom */
+}
+
+a {
+  color: var(--ink);
+}
+
+/* ── Focus-visible ring (accent outline, not on mouse clicks) ── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Skip link ─────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.625rem 1rem;
+  z-index: 100;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ── ScanLog caret ─────────────────────────────────── */
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 1em;
+  vertical-align: text-bottom;
+  background: var(--ink);
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ── Link text-decoration reset (Tailwind v4 compat) ─ */
+a {
+  text-decoration: none;
+}
+
+/* ── Accessibility toolbar settings ─────────────────── */
+
+/* Font size */
+:root {
+  --a11y-font-size: 16px;
+}
+body {
+  font-size: var(--a11y-font-size);
+}
+
+/* High contrast */
+.a11y-high-contrast {
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --ink: #ffffff;
+  --muted: #cccccc;
+  --accent: #00ff99;
+  --accent-dim: #003322;
+  --line: #444444;
+}
+
+/* Reduce motion (app-level, independent of OS) */
+.a11y-reduce-motion *,
+.a11y-reduce-motion *::before,
+.a11y-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+.a11y-reduce-motion .caret {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+/* Readable font */
+.a11y-readable-font,
+.a11y-readable-font body {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.a11y-readable-font .font-mono,
+.a11y-readable-font [class*="font-mono"] {
+  font-family: "Courier New", Courier, monospace !important;
+}
+
+/* Underline links */
+.a11y-underline-links a {
+  text-decoration: underline !important;
+}
+
+/* Line spacing */
+.a11y-spacing-normal body {
+  line-height: 1.6;
+}
+.a11y-spacing-relaxed body {
+  line-height: 1.9;
+}
+.a11y-spacing-loose body {
+  line-height: 2.2;
+}
+
+/* Enhanced focus */
+.a11y-enhanced-focus a:focus-visible,
+.a11y-enhanced-focus button:focus-visible,
+.a11y-enhanced-focus input:focus-visible,
+.a11y-enhanced-focus textarea:focus-visible,
+.a11y-enhanced-focus select:focus-visible,
+.a11y-enhanced-focus [tabindex]:focus-visible {
+  outline: 4px solid var(--accent) !important;
+  outline-offset: 4px !important;
+  border-radius: 3px !important;
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 6px var(--accent) !important;
 }
