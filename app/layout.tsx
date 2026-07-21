@@ -35,7 +35,7 @@ export default function RootLayout({
       lang="en"
       className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} h-full antialiased`}
     >
-      <body className="bg-bg text-ink flex min-h-full flex-col font-sans">
+      <body className="bg-bg text-ink flex min-h-full flex-col font-sans" suppressHydrationWarning>
         <SkipLink />
         <AccessibilityProvider>
           <MotionProvider>{children}</MotionProvider>

@@ -16,8 +16,9 @@ export default function Section({ id, label, title, children, className = "" }: 
   return (
     <motion.section
       id={id}
+      suppressHydrationWarning
       className={`border-line border-b py-14 last:border-b-0 ${className}`}
-      initial="hidden"
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={fadeUpVariants}
